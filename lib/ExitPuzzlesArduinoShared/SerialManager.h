@@ -3,7 +3,7 @@
 class SerialManager {
 public:
   SerialManager();
-  void setup();
+  void setup(String btName);
   void handle();
   void print(const char *fmt, ...);
   void printHelp();
