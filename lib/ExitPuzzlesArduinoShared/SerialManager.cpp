@@ -24,6 +24,23 @@ void SerialManager::setup(String btName) {
 void SerialManager::registerCommand(SerialCommand cmd) {
   commands[cmdIndex++] = cmd;
 
+  // check for duplicate command or short command
+  for (int i=0; i<cmdIndex-1; i++) {
+    if (cmd.command == commands[i].command) {
+      Serial.print("WARNING: registered two commands with the same command, '");
+      Serial.print(cmd.command);
+      Serial.println("'");
+    }
+
+    if (cmd.sCommand == commands[i].sCommand) {
+      Serial.println("\r\n****************");
+      Serial.print("WARNING: registered two commands with the same short command, '");
+      Serial.print(cmd.sCommand);
+      Serial.println("'");
+      Serial.println("****************\r\n");
+    }
+  }
+
   unsigned int cmdLen = cmd.args.length() + 1;
   if (cmdLen > longestCmd) {
     longestCmd = cmdLen;
