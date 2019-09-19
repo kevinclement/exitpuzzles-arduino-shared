@@ -21,6 +21,15 @@ void SerialManager::setup(String btName) {
   // Bluetooth device name
   SerialBT.begin(btName);
 }
+void SerialManager::registerCommand(SerialCommand cmd) {
+  Serial.println(cmd.command);
+  commands[cmdIndex++] = cmd;
+
+  unsigned int cmdLen = cmd.args.length() + 1;
+  if (cmdLen > longestCmd) {
+    longestCmd = cmdLen;
+  }
+}
 
 void SerialManager::print(const char *fmt, ...) {
   char buf[256];     // resulting string limited to 128 chars
@@ -113,8 +122,14 @@ void SerialManager::handleMessage(String msg) {
 
 void SerialManager::printHelp() {
   Serial.println("Available commands:");
-  Serial.println("  enable         - turns device on");
-  Serial.println("  foo N          - set foo to value N");
-  Serial.println("  status         - prints the status of the device variables");
-  Serial.println("  reset          - software reset the device");
+
+  for (int i=0; i<cmdIndex; i++) {
+    Serial.print("  ");
+    Serial.print(commands[i].args);
+    for(int j=commands[i].args.length(); j<longestCmd; j++) {
+      Serial.print(" ");
+    }
+    Serial.print("- ");
+    Serial.println(commands[i].desc);
+  }
 }
