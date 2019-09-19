@@ -26,30 +26,5 @@ void setup() {
 }
 
 void loop() {
-  // not used in this example
   sm.handle();
 }
-
-  // if (command == "enable") {
-  //   print("enabling device to drop now...%s", CRLF);
-  //   //ENABLED = true;
-  // }
-  // else if (command == "disable") {
-  //   print("disabling device now...%s", CRLF);
-  //   //ENABLED = false;
-  // }
-  // else if (command == "drop") {
-  //   //FORCE_DROP = true;
-  //   print("dropping bottom now...%s", CRLF);
-  // }
-  // else if (command == "threshold") {
-  //   print("setting threshold to '%d'...%s", value, CRLF);
-  //   // LIGHT_THRESHOLD = value;
-  //   // EEPROM.put(LIGHT_THRESHOLD_ADDR, value);
-  //   // EEPROM.commit();    
-  // }
-  // else if (command == "status") {
-  //   //printVariables();
-  // }
-  // else if (command == "reset") {
-  //   ESP.restart();
