@@ -1,0 +1,10 @@
+{
+    "name": "ExitPuzzlesArduinoShared",
+    "description": "Shared Arduino library used in ExitPuzzles devices.",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/kevinclement/exitpuzzles-arduino-shared.git"
+    },
+    "version": "0.0.0"
+}
