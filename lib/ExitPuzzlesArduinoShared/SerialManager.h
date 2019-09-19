@@ -1,8 +1,8 @@
 #pragma once
 
-class SerialManager2 {
+class SerialManager {
 public:
-  SerialManager2();
+  SerialManager();
   void setup();
   void handle();
   void print(const char *fmt, ...);

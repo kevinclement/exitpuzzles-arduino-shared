@@ -1,34 +1,34 @@
 #include "Arduino.h"
-#include "SerialManager2.h"
+#include "SerialManager.h"
 // #include "consts.h"
 // #include "Logic.h"
 // #include "BluetoothSerial.h"
 
 // BluetoothSerial SerialBT;
 
-SerialManager2::SerialManager2()
+SerialManager::SerialManager()
 {  
 }
 
-void SerialManager2::setup() {
+void SerialManager::setup() {
 }
 
-void SerialManager2::print(const char *fmt, ...) {
+void SerialManager::print(const char *fmt, ...) {
 }
 
-void SerialManager2::handle() {
+void SerialManager::handle() {
 }
 
-void SerialManager2::readAnyBluetoothMessage() {
+void SerialManager::readAnyBluetoothMessage() {
 }
 
-void SerialManager2::readAnySerialMessage() {
+void SerialManager::readAnySerialMessage() {
 }
 
-void SerialManager2::handleMessage(String msg) {
+void SerialManager::handleMessage(String msg) {
 }
 
-void SerialManager2::printHelp() {
+void SerialManager::printHelp() {
   Serial.println("Available commands:");
   Serial.println("  enable         - turns device on");
   Serial.println("  foo N          - set foo to value N");
