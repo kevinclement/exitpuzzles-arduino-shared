@@ -22,7 +22,6 @@ void SerialManager::setup(String btName) {
   SerialBT.begin(btName);
 }
 void SerialManager::registerCommand(SerialCommand cmd) {
-  Serial.println(cmd.command);
   commands[cmdIndex++] = cmd;
 
   unsigned int cmdLen = cmd.args.length() + 1;
@@ -83,36 +82,23 @@ void SerialManager::handleMessage(String msg) {
 
   // check if we need to split on space for advance commands
   for (int i = 0; i <= msg.length(); i++) {
-      if (msg.charAt(i) == ' ') {         
-          command = msg.substring(0, i);
-          value = msg.substring(i+1, msg.length()).toInt();
-      }
+    if (msg.charAt(i) == ' ') {
+      command = msg.substring(0, i);
+      value = msg.substring(i+1, msg.length()).toInt();
+    }
   }
- 
-  if (command == "enable") {
-    print("enabling device to drop now...%s", CRLF);
-    //ENABLED = true;
+
+  bool foundMatch = false;
+  for (int i=0; i<cmdIndex; i++) {
+    if (command == commands[i].command || (command.length() == 1 && command[0] == commands[i].sCommand)) {
+      Serial.print("Found match for ");
+      Serial.println(commands[i].command);
+      foundMatch = true;
+      commands[i].cb(value);
+    }
   }
-  else if (command == "disable") {
-    print("disabling device now...%s", CRLF);
-    //ENABLED = false;
-  }
-  else if (command == "drop") {
-    //FORCE_DROP = true;
-    print("dropping bottom now...%s", CRLF);
-  }
-  else if (command == "threshold") {
-    print("setting threshold to '%d'...%s", value, CRLF);
-    // LIGHT_THRESHOLD = value;
-    // EEPROM.put(LIGHT_THRESHOLD_ADDR, value);
-    // EEPROM.commit();    
-  }
-  else if (command == "status") {
-    //printVariables();
-  }
-  else if (command == "reset") {
-    ESP.restart();
-  } else {
+
+  if (!foundMatch) {
     int str_len = command.length() + 1; 
     char char_array[str_len];
     command.toCharArray(char_array, str_len);
