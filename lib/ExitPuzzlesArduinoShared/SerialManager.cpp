@@ -91,8 +91,6 @@ void SerialManager::handleMessage(String msg) {
   bool foundMatch = false;
   for (int i=0; i<cmdIndex; i++) {
     if (command == commands[i].command || (command.length() == 1 && command[0] == commands[i].sCommand)) {
-      Serial.print("Found match for ");
-      Serial.println(commands[i].command);
       foundMatch = true;
       commands[i].cb(value);
     }
