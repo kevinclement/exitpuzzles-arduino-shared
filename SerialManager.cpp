@@ -5,6 +5,7 @@
 #include "BluetoothSerial.h"
 
 BluetoothSerial SerialBT;
+bool btEnabled = false;
 
 SerialManager::SerialManager()
 {  
@@ -19,7 +20,10 @@ void SerialManager::setup(String btName) {
   while (!Serial); // Wait untilSerial is ready 
 
   // Bluetooth device name
-  SerialBT.begin(btName);
+  if (btName != "") {
+    SerialBT.begin(btName);
+    btEnabled = true;
+  }
 }
 void SerialManager::registerCommand(SerialCommand cmd) {
   commands[cmdIndex++] = cmd;
@@ -58,12 +62,16 @@ void SerialManager::print(const char *fmt, ...) {
   Serial.print(buf);
 
   // print to bluetooth if available
-  SerialBT.print(buf);
+  if (btEnabled) {
+    SerialBT.print(buf);
+  }
 }
 
 void SerialManager::handle() {
   // read bluetooth messages
-  readAnyBluetoothMessage();
+  if (btEnabled) {
+    readAnyBluetoothMessage();
+  }
 
   // read serial messages
   readAnySerialMessage();
