@@ -118,6 +118,9 @@ void SerialManager::handleMessage(String msg) {
     if (command == commands[i].command || (command.length() == 1 && command[0] == commands[i].sCommand)) {
       foundMatch = true;
       commands[i].cb(value);
+    } else if (command == "help" || command == "?") {
+      foundMatch = true;
+      printHelp();
     }
   }
 
