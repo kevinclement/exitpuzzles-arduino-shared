@@ -114,13 +114,13 @@ void SerialManager::handleMessage(String msg) {
   }
 
   bool foundMatch = false;
+  bool help = false;
   for (int i=0; i<cmdIndex; i++) {
     if (command == commands[i].command || (command.length() == 1 && command[0] == commands[i].sCommand)) {
       foundMatch = true;
       commands[i].cb(value);
     } else if (command == "help" || command == "?") {
-      foundMatch = true;
-      printHelp();
+      foundMatch = help = true;
     }
   }
 
@@ -129,7 +129,11 @@ void SerialManager::handleMessage(String msg) {
     char char_array[str_len];
     command.toCharArray(char_array, str_len);
     print("unknown command: %s%s", char_array, CRLF);
-  } 
+  }
+
+  if (help) {
+    printHelp();
+  }
 }
 
 void SerialManager::printHelp() {
